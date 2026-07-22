@@ -1,0 +1,31 @@
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  email     String   @unique
+  password  String
+  name      String
+  role      String   @default("CUSTOMER") // CUSTOMER or ADMIN
+  createdAt DateTime @default(now())
+}
+
+model Vehicle {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  make        String
+  model       String
+  category    String   // SUV, Sedan, Sports, Electric, Luxury, Truck
+  price       Float
+  quantity    Int      @default(0)
+  year        Int      @default(2024)
+  imageUrl    String?
+  description String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
