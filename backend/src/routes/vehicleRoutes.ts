@@ -4,10 +4,10 @@ import { authenticateToken, requireAdmin } from '../middleware/authMiddleware';
 
 const router = Router();
 
-router.use(authenticateToken);
-
 router.get('/', getAll);
 router.get('/search', search);
+
+router.use(authenticateToken);
 router.post('/', requireAdmin, create);
 router.put('/:id', requireAdmin, update);
 router.delete('/:id', requireAdmin, remove);

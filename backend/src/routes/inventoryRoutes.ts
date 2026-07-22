@@ -4,9 +4,7 @@ import { authenticateToken, requireAdmin } from '../middleware/authMiddleware';
 
 const router = Router();
 
-router.use(authenticateToken);
-
-router.post('/:id/purchase', purchase);
-router.post('/:id/restock', requireAdmin, restock);
+router.post('/:id/purchase', authenticateToken, purchase);
+router.post('/:id/restock', authenticateToken, requireAdmin, restock);
 
 export default router;
