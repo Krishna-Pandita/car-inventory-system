@@ -1,7 +1,9 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { Vehicle } from '../types';
-import { ShoppingCart, RefreshCw, Edit3, Trash2, Tag, Calendar, Layers } from 'lucide-react';
+import { ShoppingCart, RefreshCw, Edit3, Trash2, Tag, Calendar, Layers, Plus } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
+import { useCart } from '../context/CartContext';
 
 interface VehicleCardProps {
   vehicle: Vehicle;
@@ -19,16 +21,17 @@ export const VehicleCard: React.FC<VehicleCardProps> = ({
   onDelete,
 }) => {
   const { isAdmin } = useAuth();
+  const { addToCart } = useCart();
   const isOutOfStock = vehicle.quantity === 0;
 
   const defaultImage =
     'https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=800&q=80';
 
   return (
-    <div className="glass-card rounded-2xl overflow-hidden border border-slate-800/80 hover:border-slate-700 transition-all duration-300 hover:-translate-y-1 flex flex-col group">
+    <div className="glass-card rounded-2xl overflow-hidden border border-slate-800/80 hover:border-slate-700 transition-all duration-300 hover:-translate-y-1 flex flex-col group relative">
       
       {/* Image Container */}
-      <div className="relative h-52 w-full overflow-hidden bg-slate-900">
+      <Link to={`/vehicle/${vehicle.id}`} className="relative h-52 w-full overflow-hidden bg-slate-900 block cursor-pointer">
         <img
           src={vehicle.imageUrl || defaultImage}
           alt={`${vehicle.make} ${vehicle.model}`}
@@ -69,11 +72,11 @@ export const VehicleCard: React.FC<VehicleCardProps> = ({
         {/* Title & Price inside image gradient overlay */}
         <div className="absolute bottom-3 left-4 right-4">
           <p className="text-xs font-bold uppercase tracking-wider text-cyan-400">{vehicle.make}</p>
-          <h3 className="text-xl font-extrabold text-white tracking-tight leading-tight">
+          <h3 className="text-xl font-extrabold text-white tracking-tight leading-tight group-hover:text-cyan-300 transition-colors">
             {vehicle.model}
           </h3>
         </div>
-      </div>
+      </Link>
 
       {/* Content Details */}
       <div className="p-5 flex-1 flex flex-col justify-between space-y-4">
@@ -97,19 +100,35 @@ export const VehicleCard: React.FC<VehicleCardProps> = ({
         {/* Action Buttons */}
         <div className="space-y-2 pt-2 border-t border-slate-800/80">
           
-          {/* Main Purchase Action */}
-          <button
-            onClick={() => onPurchase(vehicle)}
-            disabled={isOutOfStock}
-            className={`w-full py-2.5 px-4 rounded-xl font-bold text-sm flex items-center justify-center gap-2 transition-all ${
-              isOutOfStock
-                ? 'bg-slate-900 text-slate-600 border border-slate-800 cursor-not-allowed'
-                : 'bg-gradient-to-r from-emerald-500 to-cyan-600 text-slate-950 hover:from-emerald-400 hover:to-cyan-500 shadow-lg shadow-emerald-950/50 active:scale-[0.98]'
-            }`}
-          >
-            <ShoppingCart className="w-4 h-4" />
-            <span>{isOutOfStock ? 'Out of Stock' : 'Purchase Vehicle'}</span>
-          </button>
+          <div className="flex gap-2">
+            {/* Purchase Now */}
+            <button
+              onClick={() => onPurchase(vehicle)}
+              disabled={isOutOfStock}
+              className={`flex-1 py-2 px-3 rounded-xl font-bold text-xs flex items-center justify-center gap-1.5 transition-all ${
+                isOutOfStock
+                  ? 'bg-slate-900 text-slate-600 border border-slate-800 cursor-not-allowed'
+                  : 'bg-emerald-600/20 text-emerald-400 border border-emerald-500/50 hover:bg-emerald-600/30 shadow-lg shadow-emerald-950/20 active:scale-[0.98]'
+              }`}
+            >
+              <ShoppingCart className="w-4 h-4" />
+              <span>Buy</span>
+            </button>
+            
+            {/* Add to Cart */}
+            <button
+              onClick={() => addToCart(vehicle)}
+              disabled={isOutOfStock}
+              className={`flex-1 py-2 px-3 rounded-xl font-bold text-xs flex items-center justify-center gap-1.5 transition-all ${
+                isOutOfStock
+                  ? 'bg-slate-900 text-slate-600 border border-slate-800 cursor-not-allowed'
+                  : 'bg-gradient-to-r from-cyan-600 to-blue-600 text-white hover:from-cyan-500 hover:to-blue-500 shadow-lg shadow-cyan-950/50 active:scale-[0.98]'
+              }`}
+            >
+              <Plus className="w-4 h-4" />
+              <span>Cart</span>
+            </button>
+          </div>
 
           {/* Admin Tools Bar */}
           {isAdmin && (
