@@ -120,6 +120,7 @@ Using AI significantly accelerated my ability to scaffold and deploy complex, fu
 
 ---
 
+
 ## Test Report
 
 Our test suite is split between the Backend (Supertest integration tests) and the Frontend (Vitest logic tests). The suite follows strict TDD coverage for the core business constraints.
@@ -129,27 +130,27 @@ Our test suite is split between the Backend (Supertest integration tests) and th
 ```text
  RUN  v2.1.9 D:/Documents/car-dealership-inventory/backend
 
- ✓ tests/auth.test.ts (4 tests) 1795ms
-   ✓ Auth API (TDD) > should register a new customer user successfully 477ms
- ✓ tests/vehicles.test.ts (6 tests) 2733ms
-   ✓ Vehicles API (TDD) > should update vehicle details 304ms
- ✓ tests/inventory.test.ts (4 tests) 2778ms
-   ✓ Inventory API (TDD) > should decrease quantity upon purchase 311ms
-   ✓ Inventory API (TDD) > should allow admin to restock vehicle 355ms
+  tests/auth.test.ts (4 tests) 1795ms
+    Auth API (TDD) > should register a new customer user successfully 477ms
+  tests/vehicles.test.ts (6 tests) 2733ms
+    Vehicles API (TDD) > should update vehicle details 304ms
+  tests/inventory.test.ts (4 tests) 2778ms
+    Inventory API (TDD) > should decrease quantity upon purchase 311ms
+    Inventory API (TDD) > should allow admin to restock vehicle 355ms
 
  Test Files  3 passed (3)
       Tests  14 passed (14)
    Start at  23:43:22
    Duration  4.80s
-```
+
 
 ### Frontend Tests
 
 ```text
  RUN  v2.1.9 D:/Documents/car-dealership-inventory/frontend
 
- ✓ src/tests/cart.test.ts (5 tests) 4ms
- ✓ src/App.test.tsx (3 tests) 79ms
+  src/tests/cart.test.ts (5 tests) 4ms
+  src/App.test.tsx (3 tests) 79ms
 
  Test Files  2 passed (2)
       Tests  8 passed (8)
